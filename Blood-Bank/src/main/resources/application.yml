@@ -1,0 +1,29 @@
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/bloodbank
+        username: postgres
+        password: razdeepak
+
+    jpa:
+        show-sql: true
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+        hibernate:
+            ddl-auto: create
+
+    application:
+        name: Blood-Bank
+
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: dropofvitalfluid@gmail.com
+        password: iscfftkchcouxnrs
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+                        required: true
