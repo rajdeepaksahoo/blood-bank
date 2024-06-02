@@ -5,6 +5,7 @@ import com.blood.bank.service.DonorService;
 import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RequestMapping("/donor")
 public class DonorController {
-    private DonorService donorService;
+    private final DonorService donorService;
 
-    @PostMapping("/register")
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DonorDto> registerDonor(@RequestBody DonorDto donorDto) throws MessagingException {
         return new ResponseEntity<>(donorService.registerDonor(donorDto), HttpStatus.OK);
     }

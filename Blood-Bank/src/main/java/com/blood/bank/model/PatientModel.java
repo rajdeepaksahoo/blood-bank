@@ -27,7 +27,7 @@ public class PatientModel {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private AddressModel address;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "patient_disease",
             joinColumns = { @JoinColumn(name = "patient_id") },

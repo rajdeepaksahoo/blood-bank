@@ -4,6 +4,7 @@ import com.blood.bank.repository.DonorRepository;
 import com.blood.bank.dto.DonorDto;
 import com.blood.bank.exception.DonorAlreadyExistsException;
 import com.blood.bank.model.DonorModel;
+import com.blood.bank.service.CommonService;
 import com.blood.bank.service.DonorService;
 import com.blood.bank.service.MailService;
 import jakarta.mail.MessagingException;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class DonorServiceImpl implements DonorService {
     private MailService mailService;
     private DonorRepository donorRepository;
+    private CommonService commonService;
     @Override
     @Transactional
     public DonorDto registerDonor(DonorDto donorDto) throws MessagingException {
@@ -23,32 +25,10 @@ public class DonorServiceImpl implements DonorService {
             throw new DonorAlreadyExistsException();
         }
 
-        DonorModel donorModel = donorRepository.save(mapToDonorModel(donorDto));
+        DonorModel donorModel = donorRepository.save(commonService.mapToDonorModel(donorDto));
         mailService.sendMail(donorModel.getEmail(),"Registration As A Donor","You are successfully registered");
-        return mapToDonorDto(donorModel);
+        return commonService.mapToDonorDto(donorModel);
     }
 
-    private DonorModel mapToDonorModel(DonorDto donorDto){
-        return DonorModel.builder()
-                .id(donorDto.getId())
-                .address(donorDto.getAddress())
-                .name(donorDto.getName())
-                .email(donorDto.getEmail())
-                .bloodType(donorDto.getBloodType())
-                .contactNumber(donorDto.getContactNumber())
-                .diseases(donorDto.getDiseases())
-                .build();
-    }
 
-    private DonorDto mapToDonorDto(DonorModel model){
-        return DonorDto.builder()
-                .id(model.getId())
-                .address(model.getAddress())
-                .name(model.getName())
-                .email(model.getEmail())
-                .bloodType(model.getBloodType())
-                .contactNumber(model.getContactNumber())
-                .diseases(model.getDiseases())
-                .build();
-    }
 }

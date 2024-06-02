@@ -1,5 +1,6 @@
 package com.blood.bank.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,7 @@ public class DonorModel {
     private String email;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
+    @JsonManagedReference("donor-address")
     private AddressModel address;
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
